@@ -1,9 +1,10 @@
 
 
 export async function fetchNews() {
+  const apiKey = process.env.NEWS_API_KEY;
   try {
     const res = await fetch(  
-      "https://newsapi.org/v2/everything?q=tesla&from=2025-10-12&sortBy=publishedAt&apiKey=08368d32449d407b8950622dd3150e1d",
+      `https://newsapi.org/v2/everything?q=tesla&from=2025-10-12&sortBy=publishedAt&apiKey=${apiKey}`,
       { next: { revalidate: 3600 } }
     );
 
