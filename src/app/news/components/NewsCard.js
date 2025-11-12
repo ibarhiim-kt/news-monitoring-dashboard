@@ -7,11 +7,12 @@ const NewsCard = ({ article }) => {
   return (
     <Link
       href={article.link}
+      target="_blank"
       className="group relative rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300"
     >
       {/* Background image */}
       <div
-        className="h-64 bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
+        className="h-96 bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
         style={{ backgroundImage: `url(${article.image})` }}
       ></div>
 

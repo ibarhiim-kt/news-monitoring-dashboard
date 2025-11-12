@@ -1,6 +1,7 @@
 // components/Header.jsx
 'use client'
 import { useState } from 'react';
+import AuthButton from './AuthButtons';
 import Image from 'next/image';
 
 export default function Navbar() {
@@ -21,6 +22,7 @@ export default function Navbar() {
         </nav>
 
         {/* Right side: Profile + Mobile Menu Button */}
+        <AuthButton />
         <div className="flex items-center space-x-4">
           <Image
             src="/globe.svg" // replace with your profile image in /public
