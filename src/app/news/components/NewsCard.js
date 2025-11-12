@@ -2,14 +2,18 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { useUser, useSignIn} from "@clerk/nextjs";
-
+import { useUser} from "@clerk/nextjs";
+import { useNewsStore } from "@/app/store/newStore";
 import { BookmarkIcon } from "@heroicons/react/24/outline";
 import { BookmarkIcon as BookmarkSolidIcon } from "@heroicons/react/24/solid";
 
 const NewsCard = ({ article }) => {
+  const setSelectedArticle = useNewsStore((state) => state.setSelectedArticle);
+
+  const handleClick = () => {
+    setSelectedArticle(article); // save article in store
+  };
   const { user, isSignedIn } = useUser();
-  const { signIn } = useSignIn();
   const [saved, setSaved] = useState(false);
 
   // Use a user-specific key for storage
@@ -45,8 +49,12 @@ const NewsCard = ({ article }) => {
 
   return (
     <Link
-      href={article.link}
-      target="_blank"
+
+      href={{
+        pathname:'/news-details',
+        query:{title:article.title}}}
+      onClick={handleClick}
+      
       className="group relative rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300"
     >
       <div
