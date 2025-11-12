@@ -2,8 +2,8 @@
 
 export async function fetchNews() {
   try {
-    const res = await fetch(
-      "https://newsapi.org/v2/everything?q=tesla&from=2025-10-11&sortBy=publishedAt&apiKey=acdebd2609b14bf3a5cb102855dcf613",
+    const res = await fetch(  
+      "https://newsapi.org/v2/everything?q=tesla&from=2025-10-12&sortBy=publishedAt&apiKey=08368d32449d407b8950622dd3150e1d",
       { next: { revalidate: 3600 } }
     );
 

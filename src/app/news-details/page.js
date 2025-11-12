@@ -1,9 +1,9 @@
 // app/news/[id]/page.js
 'use client';
 
-import Image from 'next/image';
 import { useNewsStore } from '../store/newStore';
 import Link from 'next/link';
+
 export default function NewsDetail() {
   // Sample data for now
   const selectedArticle = useNewsStore((state) => state.selectedArticle);
@@ -15,10 +15,11 @@ export default function NewsDetail() {
       </div>
     );
   }
+  
   return (
-    <> 
     
-    <div className="min-h-screen bg-gray-50 flex justify-center items-start p-4">
+    
+    <div  className="min-h-screen bg-gray-50 flex justify-center items-start p-4">
        <div className="left-3 absolute">
     <Link
       href="/"
@@ -51,6 +52,6 @@ export default function NewsDetail() {
         </div>
       </div>
     </div>
-    </>
+    
   );
 }

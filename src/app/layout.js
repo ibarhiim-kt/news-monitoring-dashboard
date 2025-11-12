@@ -5,12 +5,15 @@ import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 
 export default function RootLayout({ children }) {
+
+  
   return (
-    <ClerkProvider>
+    <ClerkProvider
+    >
     <html lang="en">
       <body>     
         <Navbar/>
-        <Header/>
+       <Header/>
        <Providers>{children}</Providers>
       </body>
     </html>
