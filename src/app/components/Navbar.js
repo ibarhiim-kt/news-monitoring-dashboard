@@ -11,7 +11,7 @@ export default function Navbar() {
     <nav className="bg-white shadow-md">
       <div className="flex items-center justify-between px-6 py-4 md:px-12">
         {/* Logo */}
-        <div className="text-3xl font-bold text-red-600">Buletin</div>
+        <div className="text-3xl font-bold text-purple-600">Buletin</div>
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex space-x-6 text-gray-700 font-medium">
@@ -22,8 +22,9 @@ export default function Navbar() {
         </nav>
 
         {/* Right side: Profile + Mobile Menu Button */}
-        <AuthButton />
+        
         <div className="flex items-center space-x-4">
+          <AuthButton />
           <Image
             src="/globe.svg" // replace with your profile image in /public
             alt="Profile"

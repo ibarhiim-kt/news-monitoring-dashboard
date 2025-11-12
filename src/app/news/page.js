@@ -1,7 +1,6 @@
 // news/page.js
 import NewsList from "./components/NewsList";
 import { Suspense } from 'react';
-
 import { fetchNews } from '../lib/fetchNews';
 import SkeletonNewsCard from './components/SkeletonNewsCard';
 

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const Header = () => {
-  const pathname = usePathname(); // get current route
+  const pathname = usePathname(); // get current path
 
   return (
     <header className="bg-white pt-16 pb-5 px-4 sm:px-8 md:px-16">
@@ -25,7 +25,7 @@ const Header = () => {
             href="/"
             className={`px-4 py-2 rounded-lg inline-block ${
               pathname === "/"
-                ? "bg-blue-500 text-white"
+                ? "bg-purple-500 text-white"
                 : "bg-gray-200 text-gray-800 hover:bg-gray-300"
             }`}
           >
@@ -35,7 +35,7 @@ const Header = () => {
             href="/reading"
             className={`px-4 py-2 rounded-lg inline-block ${
               pathname === "/reading"
-                ? "bg-blue-500 text-white"
+                ? "bg-purple-500 text-white"
                 : "bg-gray-200 text-gray-800 hover:bg-gray-300"
             }`}
           >

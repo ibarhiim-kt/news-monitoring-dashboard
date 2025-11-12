@@ -5,5 +5,7 @@ import { useUser, SignInButton, SignOutButton } from '@clerk/nextjs';
 export default function AuthButton() {
   const { isSignedIn } = useUser();
 
-  return isSignedIn ? <SignOutButton /> : <SignInButton />;
+  return <div className="cursor-pointer">
+      {isSignedIn ? <SignOutButton /> : <SignInButton />}
+    </div>
 }
