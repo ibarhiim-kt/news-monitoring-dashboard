@@ -1,7 +1,8 @@
 
 
 export async function fetchNews() {
-  const apiKey = process.env.NEWS_API_KEY;
+  const apiKey = process.env.NEXT_PUBLIC_NEWS_API_KEY;
+  console.log("Using NEWS_API_KEY:", apiKey);
   try {
     const res = await fetch(  
       `https://newsapi.org/v2/everything?q=tesla&from=2025-10-12&sortBy=publishedAt&apiKey=${apiKey}`,
