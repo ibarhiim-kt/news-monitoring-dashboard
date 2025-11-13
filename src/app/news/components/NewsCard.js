@@ -20,15 +20,8 @@ const NewsCard = ({ article }) => {
     session.then(({ data }) => setUser(data.session?.user || null));
   }, []);
 
-  // const storageKey = user ? `readingList_${user.id}` : "readingList_guest";
-
-  // useEffect(() => {
-  //   const savedArticles = JSON.parse(localStorage.getItem(storageKey)) || [];
-  //   const isAlreadySaved = savedArticles.some((a) => a.link === article.link);
-  //   setSaved(isAlreadySaved);
-  // }, [article.link, storageKey]);
-  useEffect(() => {
-  if (!user) return; // wait until user is loaded
+   useEffect(() => {
+  if (!user) return; 
 
   const fetchSaved = async () => {
     const { data, error } = await supabaseClient

@@ -1,77 +1,59 @@
 "use client";
-
-import { useEffect, useState } from "react";
-import NewsCard from "../news/components/NewsCard";
+import React, { useEffect, useState } from "react";
 import { supabaseClient } from "@/app/lib/supabase/client";
-import { useRouter } from "next/navigation";
+import NewsCard from "@/app/news/components/NewsCard"; // your existing NewsCard component
 
-export default function ReadingListPage() {
+
+const SavedNews = () => {
+  const [savedArticles, setSavedArticles] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
-  const [readingList, setReadingList] = useState([]);
-  const router = useRouter();
 
-  // Check Supabase session
+  // Get current user
   useEffect(() => {
-    const getUser = async () => {
+    const fetchUser = async () => {
       const { data } = await supabaseClient.auth.getSession();
-      const currentUser = data.session?.user || null;
-      setUser(currentUser);
-
-      if (currentUser) {
-        const saved = JSON.parse(localStorage.getItem(`readingList_${currentUser.id}`)) || [];
-        setReadingList(saved);
-      }
+      setUser(data.session?.user || null);
     };
-
-    getUser();
-
-    // Optional: subscribe to auth changes
-    const { data: listener } = supabaseClient.auth.onAuthStateChange((_event, session) => {
-      const currentUser = session?.user || null;
-      setUser(currentUser);
-      if (currentUser) {
-        const saved = JSON.parse(localStorage.getItem(`readingList_${currentUser.id}`)) || [];
-        setReadingList(saved);
-      } else {
-        setReadingList([]);
-      }
-    });
-
-    return () => {
-      listener.subscription.unsubscribe();
-    };
+    fetchUser();
   }, []);
 
-  if (!user) {
-    return (
-      <div className="p-8 text-center">
-        <h1 className="text-2xl font-bold mb-4">Reading List</h1>
-        <p className="text-gray-600">
-          Please{" "}
-          <button
-            onClick={() => router.push("/signin")}
-            className="text-purple-600 underline"
-          >
-            sign in
-          </button>{" "}
-          to view your saved articles.
-        </p>
-      </div>
-    );
-  }
+  
+  useEffect(() => {
+    if (!user) return;
+
+    const fetchSavedArticles = async () => {
+      setLoading(true);
+      const { data, error } = await supabaseClient
+        .from("saved_articles")
+        .select("*")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        console.error("Error fetching saved articles:", error);
+      } else {
+        setSavedArticles(data);
+      }
+      setLoading(false);
+    };
+
+    fetchSavedArticles();
+  }, [user]);
+
+  if (loading) return <p className="py-5 px-6 sm:px-10 md:px-16">Loading saved news...</p>;
+  if (!savedArticles.length) return <p className="py-5 px-6 sm:px-10 md:px-16">No saved articles yet.</p>;
 
   return (
-    <div className="bg-white py-5 px-6 sm:px-10 md:px-16">
-      <h1 className="text-3xl md:text-4xl font-bold mb-12">Your Reading List</h1>
-      {readingList.length === 0 ? (
-        <p className="text-gray-500">You haven’t saved any articles yet.</p>
-      ) : (
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {readingList.map((article, index) => (
-            <NewsCard key={index} article={article} />
-          ))}
-        </div>
-      )}
+    
+       <div className="py-5 px-6 sm:px-10 md:px-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      {savedArticles.map((article) => (
+        <NewsCard key={article.link} article={article} />
+      ))}
     </div>
+    
+ 
   );
-}
+};
+
+export default SavedNews;

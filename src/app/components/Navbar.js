@@ -27,7 +27,8 @@ export default function Navbar() {
 
   const handleLogout = async () => {
     await supabaseClient.auth.signOut();
-    router.push('/');
+
+    window.location.href = '/'
   };
 
   return (
@@ -54,7 +55,7 @@ export default function Navbar() {
               >
                 Logout
               </button>
-                        
+
               <Image
                 src="/globe.svg" // replace with your profile image
                 alt="Profile"
