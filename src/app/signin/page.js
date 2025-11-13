@@ -62,14 +62,14 @@ export default function SignInPage() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-purple-600 text-white py-3 rounded-lg font-medium hover:bg-purple-700 transition"
+          className="cursor-pointer w-full bg-purple-600 text-white py-3 rounded-lg font-medium hover:bg-purple-700 transition"
         >
           {loading ? "Signing in..." : "Sign In"}
         </button>
 
         <p className="text-sm text-gray-500 text-center">
           Don't have an account?{" "}
-          <a href="/signup" className="text-purple-600 hover:underline">
+          <a href="/signup" className="cursor-pointer text-purple-600 hover:underline">
             Sign up
           </a>
         </p>

@@ -81,6 +81,7 @@ const NewsCard = ({ article }) => {
 };
 
   return (
+    
     <Link
       href={{
         pathname: "/news-details",

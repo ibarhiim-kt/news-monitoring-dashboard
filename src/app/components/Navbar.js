@@ -48,7 +48,7 @@ export default function Navbar() {
     <nav className="bg-white shadow-md">
       <div className="flex items-center justify-between px-6 py-4 md:px-12">
         {/* Logo */}
-        <div className="text-3xl font-bold text-purple-600">Buletin</div>
+        <a href='/' className="cursor-pointer text-3xl font-bold text-purple-600">Buletin</a>
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex space-x-6 text-gray-700 font-medium">

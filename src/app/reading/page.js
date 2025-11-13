@@ -43,6 +43,8 @@ const SavedNews = () => {
 
 
   if (loading) return <SkeletonNewsCard />;
+
+  
   if (!savedArticles.length) return <p className="py-5 px-6 sm:px-10 md:px-16">No saved articles yet.</p>;
 
   return (
