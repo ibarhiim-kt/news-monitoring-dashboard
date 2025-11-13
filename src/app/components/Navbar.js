@@ -1,11 +1,34 @@
-// components/Header.jsx
 'use client'
-import { useState } from 'react';
-import AuthButton from './AuthButtons';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { supabaseClient } from '../lib/supabase/client';
+import { useRouter } from 'next/navigation';
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [user, setUser] = useState(null);
+  const router = useRouter();
+
+  // Check session on mount
+  useEffect(() => {
+    const getUser = async () => {
+      const { data } = await supabaseClient.auth.getSession();
+      setUser(data.session?.user || null);
+    };
+    getUser();
+
+    // Subscribe to auth changes
+    const { data: listener } = supabaseClient.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user || null);
+    });
+
+    return () => listener.subscription.unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    await supabaseClient.auth.signOut();
+    router.push('/');
+  };
 
   return (
     <nav className="bg-white shadow-md">
@@ -21,17 +44,41 @@ export default function Navbar() {
           <a href="#" className="hover:text-gray-900">Subscribe</a>
         </nav>
 
-        {/* Right side: Profile + Mobile Menu Button */}
-        
+        {/* Right side */}
         <div className="flex items-center space-x-4">
-          <AuthButton />
-          <Image
-            src="/globe.svg" // replace with your profile image in /public
-            alt="Profile"
-            width={36}
-            height={36}
-            className="rounded-full"
-          />
+          {user ? (
+            <>
+              <button
+                onClick={handleLogout}
+                className="cursor-pointer bg-purple-600 text-white px-3 py-1 rounded-lg text-sm hover:bg-purple-700 transition"
+              >
+                Logout
+              </button>
+                        
+              <Image
+                src="/globe.svg" // replace with your profile image
+                alt="Profile"
+                width={36}
+                height={36}
+                className="rounded-full"
+              />
+            </>
+          ) : (
+            <>
+              <button
+                onClick={() => router.push('/signin')}
+                className="cursor-pointer bg-purple-600 text-white px-3 py-1 rounded-lg text-sm hover:bg-purple-700 transition"
+              >
+                Sign In
+              </button>
+              <button
+                onClick={() => router.push('/signup')}
+                className="cursor-pointer bg-white border border-purple-600 text-purple-600 px-3 py-1 rounded-lg text-sm hover:bg-purple-50 transition"
+              >
+                Sign Up
+              </button>
+            </>
+          )}
 
           {/* Mobile menu button */}
           <button
