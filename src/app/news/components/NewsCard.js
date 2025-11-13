@@ -105,10 +105,16 @@ import Link from "next/link";
 import { supabaseClient } from "@/app/lib/supabase/client";
 import { BookmarkIcon } from "@heroicons/react/24/outline";
 import { BookmarkIcon as BookmarkSolidIcon } from "@heroicons/react/24/solid";
+import { useNewsStore } from "@/app/store/newStore";
 
 const NewsCard = ({ article }) => {
   const [saved, setSaved] = useState(false);
   const [user, setUser] = useState(null);
+  const setSelectedArticle = useNewsStore((state) => state.setSelectedArticle);
+
+  const handleClick = () => {
+    setSelectedArticle(article); // save article in store
+  };
 
   useEffect(() => {
     const session = supabaseClient.auth.getSession();
@@ -150,6 +156,7 @@ const NewsCard = ({ article }) => {
         pathname: "/news-details",
         query: { title: article.title },
       }}
+      onClick={handleClick}
       className="group relative rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300"
     >
       <div
