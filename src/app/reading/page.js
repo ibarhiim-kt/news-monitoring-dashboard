@@ -1,8 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { supabaseClient } from "@/app/lib/supabase/client";
-import NewsCard from "@/app/news/components/NewsCard"; // your existing NewsCard component
-
+import NewsCard from "@/app/news/components/NewsCard"; 
+import SkeletonNewsCard from '@/app/news/components/SkeletonNewsCard';
 
 const SavedNews = () => {
   const [savedArticles, setSavedArticles] = useState([]);
@@ -41,7 +41,8 @@ const SavedNews = () => {
     fetchSavedArticles();
   }, [user]);
 
-  if (loading) return <p className="py-5 px-6 sm:px-10 md:px-16">Loading saved news...</p>;
+
+  if (loading) return <SkeletonNewsCard />;
   if (!savedArticles.length) return <p className="py-5 px-6 sm:px-10 md:px-16">No saved articles yet.</p>;
 
   return (
